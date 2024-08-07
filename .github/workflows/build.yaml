@@ -1,0 +1,56 @@
+name: PHP Composer
+
+on:
+    workflow_dispatch:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+permissions:
+    contents: read
+
+jobs:
+    build:
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Validate composer.json and composer.lock
+                run: composer validate --strict
+
+            -   name: Cache Composer packages
+                id: composer-cache
+                uses: actions/cache@v3
+                with:
+                    path: vendor
+                    key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-php-
+
+            -   name: Install dependencies
+                run: composer install --prefer-dist --no-progress
+
+
+            -   name: Setup bufbuild
+                uses: bufbuild/buf-action@v1
+                with:
+                    setup_only: true
+
+            -   run: buf generate
+
+            -   name: Set up QEMU
+                uses: docker/setup-qemu-action@v3
+
+            -   name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v3
+
+            -   name: Build and push
+                uses: docker/build-push-action@v6
+                with:
+                    push: true
+                    context: .
+                    file: .docker/Dockerfile
+                    tags: ghcr.io/im0rtality/telemetry-bridge:latest
