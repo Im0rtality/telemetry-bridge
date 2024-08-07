@@ -1,6 +1,7 @@
 {
-    "name": "im0rtality/mqtt-metrics-bridge",
+    "name": "im0rtality/telemetry-bridge",
     "type": "project",
+    "description": "Service for telemetry data processing",
     "require": {
         "php": "^8.3",
         "ext-pcntl": "*",
@@ -17,7 +18,5 @@
             "": "src/"
         }
     },
-    "minimum-stability": "stable",
-    "config": {
-    }
+    "minimum-stability": "stable"
 }
