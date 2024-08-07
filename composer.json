@@ -1,0 +1,23 @@
+{
+    "name": "im0rtality/mqtt-metrics-bridge",
+    "type": "project",
+    "require": {
+        "php": "^8.3",
+        "ext-pcntl": "*",
+        "react/react": "^1.4",
+        "react/http": "^1.10",
+        "php-mqtt/client": "^2.1",
+        "monolog/monolog": "^3.7",
+        "league/route": "^5.1",
+        "google/protobuf": "^4.27"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "config": {
+    }
+}

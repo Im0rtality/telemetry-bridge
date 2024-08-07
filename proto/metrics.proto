@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option php_namespace = "generated";
+option php_metadata_namespace = "generated\\GPBMetadata";
+
+package Metrics;
+
+message Metric {
+  message Label {
+    string key = 1;
+    string value = 2;
+  }
+
+  string name = 1;
+  optional int32 value = 2;
+  repeated Label labels = 3;
+}
